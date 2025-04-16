@@ -19,6 +19,7 @@ This project implements a system for displaying progress messages from PHP scrip
 - [Customization](#customization)
   - [Message Format](#message-format)
   - [Multiple Message Containers](#multiple-message-containers)
+- [License](#license)
 
 
 ## Features
@@ -193,3 +194,13 @@ When sending messages, specify the target:
 
 ```javascript
 messageClient.sendMessage("This goes to the sidebar", "info", "sidebar");
+
+
+LICENSE
+----------------------------------------------------------
+
+Copyright (C) Walter A. Jablonowski 2025, free under [MIT license](LICENSE)
+
+This app is build upon PHP and free software (see [credits](credits.md)).
+
+[Privacy](https://walter-a-jablonowski.github.io/privacy.html) | [Legal](https://walter-a-jablonowski.github.io/imprint.html)
