@@ -1,0 +1,20 @@
+.message-container {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+}
+
+.message-container:empty {
+  display: none;
+}
+
+.message-container .alert {
+  margin-bottom: 0.5rem;
+}
+
+.message-container .alert:last-child {
+  margin-bottom: 0;
+}
