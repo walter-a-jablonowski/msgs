@@ -194,6 +194,7 @@ When sending messages, specify the target:
 
 ```javascript
 messageClient.sendMessage("This goes to the sidebar", "info", "sidebar");
+```
 
 
 LICENSE
