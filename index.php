@@ -37,7 +37,7 @@
             </ul>
           </div>
           <div class="card-footer bg-transparent border-top-0">
-            <a href="sse/index.php" class="btn btn-primary w-100">View SSE Demo</a>
+            <a href="sse_demo/index.php" class="btn btn-primary w-100">View SSE Demo</a>
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
             </ul>
           </div>
           <div class="card-footer bg-transparent border-top-0">
-            <a href="ajax/index.php" class="btn btn-primary w-100">View AJAX Demo</a>
+            <a href="ajax_demo/index.php" class="btn btn-primary w-100">View AJAX Demo</a>
           </div>
         </div>
       </div>

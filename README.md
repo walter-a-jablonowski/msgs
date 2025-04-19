@@ -36,7 +36,7 @@ This project implements a system for displaying progress messages from PHP scrip
 
 ```
 /msgs
-├── /ajax                 # AJAX implementation
+├── /ajax_demo            # AJAX implementation
 │   ├── ajax-client.js    # AJAX client library
 │   ├── demo-process.php  # Demo long-running process
 │   ├── index.php         # AJAX demo page
@@ -47,7 +47,7 @@ This project implements a system for displaying progress messages from PHP scrip
 │   └── message-display.js     # Shared JavaScript for displaying messages
 ├── /data                 # Message storage (created automatically)
 │   └── /messages         # JSON message files
-├── /sse                  # SSE implementation
+├── /sse_demo             # SSE implementation
 │   ├── demo-process.php  # Demo long-running process
 │   ├── index.php         # SSE demo page
 │   ├── process.php       # Message processing script
