@@ -36,26 +36,30 @@ This project implements a system for displaying progress messages from PHP scrip
 
 ```
 /msgs
-├── /ajax_demo            # AJAX implementation
-│   ├── ajax-client.js    # AJAX client library
-│   ├── demo-process.php  # Demo long-running process
-│   ├── index.php         # AJAX demo page
-│   └── process.php       # Message processing script
-├── /common               # Shared components
-│   ├── MessageManager.php     # PHP message management class
-│   ├── message-display.css    # Shared CSS styles
-│   └── message-display.js     # Shared JavaScript for displaying messages
-├── /data                 # Message storage (created automatically)
-│   └── /messages         # JSON message files
-├── /sse_demo             # SSE implementation
-│   ├── demo-process.php  # Demo long-running process
-│   ├── index.php         # SSE demo page
-│   ├── process.php       # Message processing script
-│   ├── sse-client.js     # SSE client library
-│   └── sse-server.php    # SSE server script
-├── composer.json         # Composer dependencies
-├── index.php             # Main entry point
-└── README.md             # This file
+├── /ajax_demo            
+│   ├── ajax-client.js       # Library: AJAX
+│   ├── demo-process.php     # Demo long-running process
+│   ├── index.php            # AJAX demo page
+│   └── process.php          # Library: Message processing script (works like an ajax handler)
+|
+├── /common                  # Shared components
+│   ├── MessageManager.php   # PHP message management class
+│   ├── message-display.css  # Shared CSS styles
+│   └── message-display.js   # Shared JavaScript for displaying messages
+|
+├── /data                    # Message storage (created automatically)
+│   └── /messages            # JSON message files
+|
+├── /sse_demo             
+│   ├── demo-process.php     # Demo long-running process
+│   ├── index.php            # SSE demo page
+│   ├── process.php          # Library: Message processing script (works like an ajax handler)
+│   ├── sse-client.js        # Library: SSE
+│   └── sse-server.php       # Library: SSE server script
+|
+├── composer.json            # Composer dependencies
+├── index.php                # Main entry point
+└── README.md                # This file
 ```
 
 

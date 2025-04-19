@@ -1,8 +1,9 @@
 /**
  * AJAX-based message client
  */
-class AjaxMessageClient {
-  constructor(options = {}) {
+class AjaxMessageClient
+{
+  constructor( options = {} ) {
     this.options = Object.assign({
       processUrl: 'process.php',
       sessionId: this.generateSessionId(),
