@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../common/MessageManager.php';
+
+require_once '../common/MessageManager.php';
 
 // Handle CORS if needed
 header('Content-Type: application/json');

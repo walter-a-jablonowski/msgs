@@ -43,10 +43,10 @@ class AjaxMessageClient {
    * 
    * @param {string} target Optional target filter
    */
-  startPolling(target = null) {
-    if (this.polling) {
+  startPolling( target = null )
+  {
+    if( this.polling )
       return;
-    }
     
     this.polling = true;
     

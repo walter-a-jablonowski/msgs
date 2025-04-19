@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../common/MessageManager.php';
+
+require_once '../common/MessageManager.php';
 
 // Get JSON data from request
 $jsonData = file_get_contents('php://input');

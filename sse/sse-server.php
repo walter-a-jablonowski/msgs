@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../common/MessageManager.php';
+
+require_once '../common/MessageManager.php';
 
 // Disable output buffering
 if( ob_get_level() ) ob_end_clean();
