@@ -2,14 +2,6 @@
 // Set unlimited execution time for long-running connection
 set_time_limit(0);
 
-// Prevent buffering
-ini_set('output_buffering', 'off');
-ini_set('zlib.output_compression', false);
-
-// Disable implicit flush
-ini_set('implicit_flush', true);
-ob_implicit_flush(true);
-
 require_once '../msgs_lib/MessageManager.php';
 require_once '../msgs_lib/SseServer.php';
 
