@@ -64,14 +64,14 @@ class MessageManager
   {
     $filename = $this->getMessageFilePath();
     
-    if( ! file_exists($filename) )
+    if( ! file_exists($filename))
       return [];
     
-    $messages = json_decode(file_get_contents($filename), true) ?: [];
+    $messages = json_decode( file_get_contents($filename), true) ?: [];
     
     if( $target !== null )
     {
-      $messages = array_filter($messages, function($message) use ($target) {
+      $messages = array_filter( $messages, function($message) use ($target) {
         return $message['target'] === $target;
       });
     }
@@ -95,12 +95,12 @@ class MessageManager
     if( $target === null )
       return unlink($filename);
     
-    $messages = json_decode(file_get_contents($filename), true) ?: [];
-    $messages = array_filter($messages, function($message) use ($target) {
+    $messages = json_decode( file_get_contents($filename), true) ?: [];
+    $messages = array_filter( $messages, function($message) use ($target) {
       return $message['target'] !== $target;
     });
     
-    return file_put_contents($filename, json_encode($messages)) !== false;
+    return file_put_contents( $filename, json_encode($messages)) !== false;
   }
   
   /**
