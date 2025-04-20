@@ -32,6 +32,7 @@ $action = $data['action'] ?? 'addMessage';
 switch( $action )
 {
   case 'addMessage':
+
     $message = $data['message'] ?? '';
     $type    = $data['type'] ?? 'info';
     $target  = $data['target'] ?? 'default';
@@ -41,6 +42,7 @@ switch( $action )
     break;
     
   case 'getMessages':
+
     $target = isset($data['target']) ? $data['target'] : null;
     $lastTimestamp = isset($data['lastTimestamp']) ? (int)$data['lastTimestamp'] : 0;
     
@@ -61,6 +63,7 @@ switch( $action )
     break;
     
   case 'clearMessages':
+  
     $target = isset($data['target']) ? $data['target'] : null;
     $success = $messageManager->clearMessages($target);
     echo json_encode(['success' => $success]);
