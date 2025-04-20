@@ -18,6 +18,7 @@ class SseMessageClient
     this.eventSource = null;
     this.connected = false;
     this.messageDisplay = null;
+    this.lastPingTime = 0;
     
     // If messageDisplay is provided, use it
     if (options.messageDisplay) {
@@ -42,55 +43,111 @@ class SseMessageClient
    */
   connect(target = null)
   {
-    if (this.eventSource)
+    if (this.eventSource) {
+      console.log('Closing existing EventSource connection before reconnecting');
       this.disconnect();
+    }
     
     let url = `${this.options.serverUrl}?sessionId=${this.options.sessionId}`;
     if (target)
       url += `&target=${encodeURIComponent(target)}`;
     
-    this.eventSource = new EventSource(url);
+    console.log('Connecting to SSE server:', url);
     
-    // Handle connection open
-    this.eventSource.addEventListener('connected', (event) => {
-      this.connected = true;
-      const data = JSON.parse(event.data);
+    try {
+      this.eventSource = new EventSource(url);
       
-      if (typeof this.options.onConnect === 'function') {
-        this.options.onConnect(data);
-      }
-    });
-    
-    // Handle messages
-    this.eventSource.addEventListener('message', (event) => {
-      const messageData = JSON.parse(event.data);
+      // Handle connection open
+      this.eventSource.addEventListener('open', (event) => {
+        console.log('EventSource connection opened');
+      });
       
-      // Display message if messageDisplay is available
-      if (this.messageDisplay) {
-        this.messageDisplay.displayMessage(messageData);
-      }
+      this.eventSource.addEventListener('connected', (event) => {
+        console.log('Received connected event from server');
+        this.connected = true;
+        this.lastPingTime = Date.now();
+        
+        try {
+          const data = JSON.parse(event.data);
+          
+          if (typeof this.options.onConnect === 'function') {
+            this.options.onConnect(data);
+          }
+        } catch (error) {
+          console.error('Error parsing connected event data:', error, event.data);
+        }
+      });
       
-      // Call onMessage callback if provided
-      if (typeof this.options.onMessage === 'function') {
-        this.options.onMessage(messageData);
-      }
-    });
-    
-    // Handle errors
-    this.eventSource.addEventListener('error', (event) => {
-      this.connected = false;
+      // Handle messages
+      this.eventSource.addEventListener('message', (event) => {
+        console.log('Received message event from server:', event.data);
+        
+        try {
+          const messageData = JSON.parse(event.data);
+          
+          // Display message if messageDisplay is available
+          if (this.messageDisplay) {
+            this.messageDisplay.displayMessage(messageData);
+          }
+          
+          // Call onMessage callback if provided
+          if (typeof this.options.onMessage === 'function') {
+            this.options.onMessage(messageData);
+          }
+        } catch (error) {
+          console.error('Error parsing message event data:', error, event.data);
+        }
+      });
+      
+      // Handle ping events to keep connection alive
+      this.eventSource.addEventListener('ping', (event) => {
+        console.log('Received ping from server');
+        this.lastPingTime = Date.now();
+      });
+      
+      // Handle info events (like timeout notifications)
+      this.eventSource.addEventListener('info', (event) => {
+        console.log('Received info event from server:', event.data);
+        try {
+          const data = JSON.parse(event.data);
+          if (data.message && this.messageDisplay) {
+            this.messageDisplay.displayMessage({
+              message: data.message,
+              type: data.type || 'info',
+              timestamp: Math.floor(Date.now() / 1000),
+              id: 'info_' + Date.now(),
+              system: true
+            });
+          }
+        } catch (error) {
+          console.error('Error parsing info event data:', error, event.data);
+        }
+      });
+      
+      // Handle errors
+      this.eventSource.addEventListener('error', (event) => {
+        console.error('EventSource error:', event);
+        this.connected = false;
+        
+        if (typeof this.options.onError === 'function') {
+          this.options.onError(event);
+        }
+        
+        // Auto reconnect if enabled
+        if (this.options.autoReconnect) {
+          console.log('Attempting to reconnect in', this.options.reconnectInterval, 'ms');
+          setTimeout(() => {
+            this.connect(target);
+          }, this.options.reconnectInterval);
+        }
+      });
+    } catch (error) {
+      console.error('Error creating EventSource:', error);
       
       if (typeof this.options.onError === 'function') {
-        this.options.onError(event);
+        this.options.onError(error);
       }
-      
-      // Auto reconnect if enabled
-      if (this.options.autoReconnect) {
-        setTimeout(() => {
-          this.connect(target);
-        }, this.options.reconnectInterval);
-      }
-    });
+    }
   }
   
   /**
@@ -98,6 +155,7 @@ class SseMessageClient
    */
   disconnect() {
     if (this.eventSource) {
+      console.log('Disconnecting from SSE server');
       this.eventSource.close();
       this.eventSource = null;
       this.connected = false;
@@ -133,6 +191,8 @@ class SseMessageClient
       if (!messageFields.type) messageFields.type = 'info';
     }
     
+    console.log('Sending message:', messageFields, 'to target:', target);
+    
     return fetch('ajax.php', {
       method: 'POST',
       headers: {
@@ -145,7 +205,11 @@ class SseMessageClient
         action: 'addMessage'
       })
     })
-    .then(response => response.json());
+    .then(response => response.json())
+    .catch(error => {
+      console.error('Error sending message:', error);
+      return { success: false, error: error.message };
+    });
   }
   
   /**
@@ -163,6 +227,8 @@ class SseMessageClient
       target: target
     }, params);
     
+    console.log('Starting process:', scriptUrl, 'with params:', processParams);
+    
     // Start the process via AJAX
     return fetch(scriptUrl, {
       method: 'POST',
@@ -171,6 +237,10 @@ class SseMessageClient
       },
       body: JSON.stringify(processParams)
     })
-    .then(response => response.json());
+    .then(response => response.json())
+    .catch(error => {
+      console.error('Error starting process:', error);
+      return { success: false, error: error.message };
+    });
   }
 }

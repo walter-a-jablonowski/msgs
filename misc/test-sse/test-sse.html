@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSE Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    #messages {
+      border: 1px solid #ccc;
+      padding: 10px;
+      min-height: 200px;
+      margin-bottom: 20px;
+    }
+    .info {
+      color: #0066cc;
+    }
+    .success {
+      color: #008800;
+    }
+    .warning {
+      color: #cc6600;
+    }
+    .danger {
+      color: #cc0000;
+    }
+    .timestamp {
+      color: #666;
+      font-size: 0.8em;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>SSE Test</h1>
+  
+  <div id="status" class="info">Connecting...</div>
+  <button id="connect">Connect</button>
+  <button id="disconnect">Disconnect</button>
+  
+  <h2>Messages</h2>
+  <div id="messages"></div>
+  
+  <script>
+    // Simple SSE client
+    let eventSource = null;
+    const messagesContainer = document.getElementById('messages');
+    const statusElement = document.getElementById('status');
+    
+    function connect() {
+      if (eventSource) {
+        disconnect();
+      }
+      
+      statusElement.textContent = 'Connecting...';
+      statusElement.className = 'info';
+      
+      try {
+        // Connect to the test SSE endpoint
+        eventSource = new EventSource('test-sse.php');
+        
+        // Log all events for debugging
+        eventSource.onopen = function(event) {
+          console.log('Connection opened:', event);
+          statusElement.textContent = 'Connected';
+          statusElement.className = 'success';
+        };
+        
+        // Handle messages
+        eventSource.addEventListener('message', function(event) {
+          console.log('Message received:', event);
+          
+          try {
+            const data = JSON.parse(event.data);
+            const messageElement = document.createElement('div');
+            messageElement.className = data.type || 'info';
+            
+            let messageText = data.message || 'No message content';
+            if (data.timestamp) {
+              const time = new Date(data.timestamp * 1000).toLocaleTimeString();
+              messageText += `<span class="timestamp">${time}</span>`;
+            }
+            
+            messageElement.innerHTML = messageText;
+            messagesContainer.appendChild(messageElement);
+          } catch (error) {
+            console.error('Error parsing message:', error);
+            const errorElement = document.createElement('div');
+            errorElement.className = 'danger';
+            errorElement.textContent = 'Error parsing message: ' + error.message;
+            messagesContainer.appendChild(errorElement);
+          }
+        });
+        
+        // Handle ping events
+        eventSource.addEventListener('ping', function(event) {
+          console.log('Ping received:', event);
+          statusElement.textContent = 'Connected (last ping: ' + new Date().toLocaleTimeString() + ')';
+        });
+        
+        // Handle errors
+        eventSource.onerror = function(event) {
+          console.error('EventSource error:', event);
+          statusElement.textContent = 'Error - Connection failed';
+          statusElement.className = 'danger';
+        };
+      } catch (error) {
+        console.error('Error creating EventSource:', error);
+        statusElement.textContent = 'Error: ' + error.message;
+        statusElement.className = 'danger';
+      }
+    }
+    
+    function disconnect() {
+      if (eventSource) {
+        console.log('Closing connection');
+        eventSource.close();
+        eventSource = null;
+        statusElement.textContent = 'Disconnected';
+        statusElement.className = 'warning';
+      }
+    }
+    
+    // Connect/disconnect buttons
+    document.getElementById('connect').addEventListener('click', connect);
+    document.getElementById('disconnect').addEventListener('click', disconnect);
+    
+    // Connect automatically on page load
+    window.addEventListener('load', connect);
+  </script>
+</body>
+</html>
