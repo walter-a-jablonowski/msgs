@@ -36,27 +36,32 @@ This project implements a system for displaying progress messages from PHP scrip
 
 ```
 /msgs
-├── /ajax_demo            
-│   ├── ajax-client.js       # Library: AJAX
-│   ├── demo-process.php     # Demo long-running process
-│   ├── index.php            # AJAX demo page
-│   └── process.php          # Library: Message processing script (works like an ajax handler)
 |
-├── /common                  # Shared components
+├── /ajax_demo               # Ajax demo
+│   ├── ajax.php             # 
+│   ├── controller.js        # 
+│   ├── demo-process.php     # 
+│   └── index.php            # 
+|                            #
+├── /msgs_lib                # Libary
 │   ├── MessageManager.php   # PHP message management class
-│   ├── message-display.css  # Shared CSS styles
-│   └── message-display.js   # Shared JavaScript for displaying messages
-|
+│   ├── message-display.css  # UI message style (may be usd)
+│   ├── message-display.js   # 
+│   ├── /ajax                # 
+│   │   └── ajax-client.js   # AJAX client
+│   └── /sse                 # 
+│       └── sse-client.js    # SSE client
+|                            #
 ├── /data                    # Message storage (created automatically)
 │   └── /messages            # JSON message files
-|
-├── /sse_demo             
-│   ├── demo-process.php     # Demo long-running process
-│   ├── index.php            # SSE demo page
-│   ├── process.php          # Library: Message processing script (works like an ajax handler)
-│   ├── sse-client.js        # Library: SSE
-│   └── sse-server.php       # Library: SSE server script
-|
+|                            #
+├── /sse_demo                # SSE demo
+│   ├── ajax.php             # 
+│   ├── controller.js        # 
+│   ├── demo-process.php     # 
+│   ├── index.php            # 
+│   └── sse-server.php       # Library: for pushing messages to clients
+|                            #
 ├── composer.json            # Composer dependencies
 ├── index.php                # Main entry point
 └── README.md                # This file
@@ -75,15 +80,15 @@ This project implements a system for displaying progress messages from PHP scrip
 ### 1. Include the necessary files
 
 ```html
-<link href="path/to/common/message-display.css" rel="stylesheet">
+<link href="path/to/msgs_lib/message-display.css" rel="stylesheet">
 
 <!-- Create message containers -->
 <div class="message-container" data-target="main"></div>
 
-<script src="path/to/common/message-display.js"></script>
-<script src="path/to/sse/sse-client.js"></script>
+<script src="path/to/msgs_lib/message-display.js"></script>
+<script src="path/to/msgs_lib/sse/sse-client.js"></script>
 <!-- OR -->
-<script src="path/to/ajax/ajax-client.js"></script>
+<script src="path/to/msgs_lib/ajax/ajax-client.js"></script>
 ```
 
 ### 2. Initialize the client
