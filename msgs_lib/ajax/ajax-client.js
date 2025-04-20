@@ -5,7 +5,7 @@ class AjaxMessageClient
 {
   constructor( options = {} ) {
     this.options = Object.assign({
-      processUrl: 'process.php',
+      processUrl: 'ajax.php',
       sessionId: this.generateSessionId(),
       pollInterval: 1000,
       onMessage: null,

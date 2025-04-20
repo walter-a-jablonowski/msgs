@@ -1,8 +1,10 @@
 /**
  * SSE-based message client
  */
-class SseMessageClient {
-  constructor(options = {}) {
+class SseMessageClient
+{
+  constructor( options = {} )
+  {
     this.options = Object.assign({
       serverUrl: 'sse-server.php',
       sessionId: this.generateSessionId(),
@@ -38,15 +40,14 @@ class SseMessageClient {
    * 
    * @param {string} target Optional target filter
    */
-  connect(target = null) {
-    if (this.eventSource) {
+  connect(target = null)
+  {
+    if (this.eventSource)
       this.disconnect();
-    }
     
     let url = `${this.options.serverUrl}?sessionId=${this.options.sessionId}`;
-    if (target) {
+    if (target)
       url += `&target=${encodeURIComponent(target)}`;
-    }
     
     this.eventSource = new EventSource(url);
     
@@ -112,7 +113,7 @@ class SseMessageClient {
    * @return {Promise} Promise that resolves when the message is sent
    */
   sendMessage(message, type = 'info', target = 'default') {
-    return fetch('process.php', {
+    return fetch('ajax.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

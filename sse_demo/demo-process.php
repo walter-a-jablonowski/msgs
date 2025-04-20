@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../common/MessageManager.php';
+require_once '../msgs_lib/MessageManager.php';
 
 // Get JSON data from request
 $jsonData = file_get_contents('php://input');
@@ -13,7 +13,7 @@ if( empty($data['sessionId']) )
 }
 
 // Initialize message manager
-$messagesDir = __DIR__ . '/../data/messages';
+$messagesDir = '../data/messages';
 $messageManager = new MessageManager($messagesDir, $data['sessionId']);
 
 // Send initial response to client

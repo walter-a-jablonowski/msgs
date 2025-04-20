@@ -1,6 +1,6 @@
 <?php
 
-require_once '../common/MessageManager.php';
+require_once '../msgs_lib/MessageManager.php';
 
 // Disable output buffering
 if( ob_get_level() ) ob_end_clean();
@@ -24,7 +24,7 @@ if( empty($sessionId) )
 $target = isset($_GET['target']) ? $_GET['target'] : null;
 
 // Initialize message manager
-$messagesDir = __DIR__ . '/../data/messages';
+$messagesDir = '../data/messages';
 $messageManager = new MessageManager($messagesDir, $sessionId);
 
 // Send initial message

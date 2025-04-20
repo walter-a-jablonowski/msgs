@@ -1,6 +1,9 @@
 <?php
 
-require_once '../common/MessageManager.php';
+require_once '../msgs_lib/MessageManager.php';
+
+$messagesDir = '../data/messages';
+
 
 // Handle CORS if needed
 header('Content-Type: application/json');
@@ -23,10 +26,7 @@ if( empty($data['sessionId']) )
 }
 
 // Initialize message manager
-$messagesDir = __DIR__ . '/../data/messages';
 $messageManager = new MessageManager($messagesDir, $data['sessionId']);
-
-// Handle different actions
 $action = $data['action'] ?? 'addMessage';
 
 switch( $action )
@@ -42,21 +42,7 @@ switch( $action )
     
   case 'getMessages':
     $target = isset($data['target']) ? $data['target'] : null;
-    $lastTimestamp = isset($data['lastTimestamp']) ? (int)$data['lastTimestamp'] : 0;
-    
     $messages = $messageManager->getMessages($target);
-    
-    // Filter messages by timestamp if lastTimestamp is provided
-    if( $lastTimestamp > 0 )
-    {
-      $messages = array_filter($messages, function($message) use ($lastTimestamp) {
-        return $message['timestamp'] > $lastTimestamp;
-      });
-    }
-    
-    // Reset array keys to ensure it's a sequential array
-    $messages = array_values($messages);
-    
     echo json_encode(['success' => true, 'messages' => $messages]);
     break;
     
