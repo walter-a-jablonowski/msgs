@@ -31,6 +31,7 @@ This project implements a system for displaying progress messages from PHP scrip
 - Messages persist when navigating away and back
 - Multiple separate processes can display messages in different locations
 
+![alt text](misc/img.png)
 
 ## Project Structure
 

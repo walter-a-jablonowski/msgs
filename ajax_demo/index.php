@@ -5,6 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AJAX Message Demo</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bs-primary: #FF6B00;
+      --bs-primary-rgb: 255,107,0;
+    }
+    .btn-primary {
+      background-color: #FF6B00 !important;
+      border-color: #FF6B00 !important;
+    }
+    .btn-outline-primary {
+      color: #FF6B00 !important;
+      border-color: #FF6B00 !important;
+    }
+    .btn-primary:hover .btn-primary:focus,
+    .btn-outline-primary:hover .btn-outline-primary:focus {
+      background-color: #e65e00 !important;
+      border-color: #e65e00 !important;
+    }
+  </style>
   <!-- Custom styles -->
   <link href="../msgs_lib/message-display.css" rel="stylesheet">
 </head>
