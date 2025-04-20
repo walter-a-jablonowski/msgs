@@ -6,13 +6,13 @@ $messagesDir = '../data/messages';
 
 
 // Disable output buffering
-if( ob_get_level() ) ob_end_clean();
+if( ob_get_level() )  ob_end_clean();
 
 // Set headers for SSE
 header('Content-Type: text/event-stream');
 header('Cache-Control: no-cache');
 header('Connection: keep-alive');
-header('X-Accel-Buffering: no'); // Disable buffering for Nginx
+header('X-Accel-Buffering: no');  // disable buffering for Nginx
 
 // Get session ID from query parameter
 $sessionId = $_GET['sessionId'] ?? '';
@@ -38,7 +38,7 @@ flush();
 $lastCheck = 0;
 $lastMessageCount = 0;
 
-while(true)
+while( true )
 {
   // Get all messages
   $messages = $messageManager->getMessages($target);
@@ -62,9 +62,7 @@ while(true)
   
   // Check if client is still connected
   if( connection_aborted() )
-  {
     break;
-  }
   
   // Sleep to reduce CPU usage (reduced from 500ms to 100ms for faster updates)
   usleep(100000); // 100ms

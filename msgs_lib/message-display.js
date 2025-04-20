@@ -1,8 +1,10 @@
 /**
  * Message display utility for both SSE and AJAX implementations
  */
-class MessageDisplay {
-  constructor(options = {}) {
+class messageDisplay
+{
+  constructor( options = {} )
+  {
     this.options = Object.assign({
       containerSelector: '.message-container',
       messageFormat: '<div class="alert alert-{type} mt-2">{message}</div>',

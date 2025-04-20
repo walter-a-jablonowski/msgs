@@ -16,7 +16,7 @@ class MessageManager
   public function __construct( $messagesDir, $sessionId )
   {
     $this->messagesDir = $messagesDir;
-    $this->sessionId = $sessionId;
+    $this->sessionId   = $sessionId;
     
     // Create messages directory if it doesn't exist
     if( ! is_dir($messagesDir) )
@@ -47,9 +47,7 @@ class MessageManager
     
     $messages = [];
     if( file_exists($filename) )
-    {
       $messages = json_decode(file_get_contents($filename), true) ?: [];
-    }
     
     $messages[] = $messageData;
     
@@ -67,9 +65,7 @@ class MessageManager
     $filename = $this->getMessageFilePath();
     
     if( ! file_exists($filename) )
-    {
       return [];
-    }
     
     $messages = json_decode(file_get_contents($filename), true) ?: [];
     
@@ -94,14 +90,10 @@ class MessageManager
     $filename = $this->getMessageFilePath();
     
     if( ! file_exists($filename) )
-    {
       return true;
-    }
     
     if( $target === null )
-    {
       return unlink($filename);
-    }
     
     $messages = json_decode(file_get_contents($filename), true) ?: [];
     $messages = array_filter($messages, function($message) use ($target) {
