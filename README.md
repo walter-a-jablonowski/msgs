@@ -42,7 +42,7 @@ This project implements a system for displaying progress messages from PHP scrip
 │   ├── controller.js        # 
 │   ├── demo-process.php     # 
 │   └── index.php            # 
-|                            #
+|                            
 ├── /msgs_lib                # Libary
 │   ├── MessageManager.php   #   PHP message management class
 │   ├── message-display.css  #   UI message style (may be usd)
@@ -51,19 +51,19 @@ This project implements a system for displaying progress messages from PHP scrip
 │   │   └── ajax-client.js   #   AJAX client
 │   └── /sse                 # 
 │       └── sse-client.js    #   SSE client
-|                            #
-├── /data                    # 
-│   └── /messages            # JSON message files (created automatically)
-|                            #
+|                            
+├── /data                    # JSON message files (created automatically)
+│   └── /messages            # 
+|                            
 ├── /sse_demo                # SSE demo
 │   ├── ajax.php             #   for clients to submit new messages or perform actions
 │   ├── controller.js        # 
 │   ├── demo-process.php     # 
 │   ├── index.php            # 
 │   └── sse-server.php       #   for pushing messages server -> client
-|                            #
+|                            
 ├── composer.json            # Composer dependencies
-├── index.php                # Main entry point
+├── index.php                # Main demp page
 └── README.md                # This file
 ```
 
