@@ -107,12 +107,32 @@ class SseMessageClient
   /**
    * Send a message to the server via AJAX
    * 
-   * @param {string} message Message text
-   * @param {string} type Message type (info, warning, error, success)
+   * @param {Object} fields Message fields object containing at least 'message' and 'type'
    * @param {string} target Target container ID (optional)
    * @return {Promise} Promise that resolves when the message is sent
    */
-  sendMessage(message, type = 'info', target = 'default') {
+  sendMessage(fields, target = 'default') {
+    // Handle both object and string formats for backward compatibility
+    let messageFields = {};
+    
+    if (typeof fields === 'string') {
+      // Legacy format: first parameter is the message text, second is the type
+      const message = fields;
+      const type = arguments[1] || 'info';
+      target = arguments[2] || 'default';
+      
+      messageFields = {
+        message: message,
+        type: type
+      };
+    } else if (typeof fields === 'object') {
+      messageFields = fields;
+      
+      // Ensure message and type are set
+      if (!messageFields.message) messageFields.message = '';
+      if (!messageFields.type) messageFields.type = 'info';
+    }
+    
     return fetch('ajax.php', {
       method: 'POST',
       headers: {
@@ -120,8 +140,7 @@ class SseMessageClient
       },
       body: JSON.stringify({
         sessionId: this.options.sessionId,
-        message: message,
-        type: type,
+        fields: messageFields,
         target: target,
         action: 'addMessage'
       })

@@ -28,20 +28,27 @@ class MessageManager
   /**
    * Add a message to the session
    * 
-   * @param string $message Message text
-   * @param string $type Message type (info, warning, error, success)
+   * @param array $fields Array of message fields (must include 'message' and 'type')
    * @param string $target Target container ID (optional)
    * @return bool Success
    */
-  public function addMessage( $message, $type = 'info', $target = 'default' ) : bool
+  public function addMessage( $fields, $target = 'default' ) : bool
   {
-    $messageData = [
+    // Ensure required fields are present
+    if( ! isset($fields['message']) ) {
+      $fields['message'] = '';
+    }
+    
+    if( ! isset($fields['type']) ) {
+      $fields['type'] = 'info';
+    }
+    
+    // Add standard fields
+    $messageData = array_merge([
       'id' => uniqid(),
       'timestamp' => time(),
-      'message' => $message,
-      'type' => $type,
       'target' => $target
-    ];
+    ], $fields);
     
     $filename = $this->getMessageFilePath();
     

@@ -36,25 +36,25 @@ else
 $target = $data['target'] ?? 'default';
 
 // Simulate a process with shorter sleep times
-$messageManager->addMessage("Starting process...", "info", $target);
+$messageManager->addMessage(['message' => "Starting process...", 'type' => "info"], $target);
 usleep(200000); // 200ms
 
-$messageManager->addMessage("Initializing...", "info", $target);
+$messageManager->addMessage(['message' => "Initializing...", 'type' => "info"], $target);
 usleep(300000); // 300ms
 
-$messageManager->addMessage("Processing step 1/5", "info", $target);
+$messageManager->addMessage(['message' => "Processing step 1/5", 'type' => "info"], $target);
 usleep(200000); // 200ms
 
-$messageManager->addMessage("Processing step 2/5", "info", $target);
+$messageManager->addMessage(['message' => "Processing step 2/5", 'type' => "info"], $target);
 usleep(300000); // 300ms
 
-$messageManager->addMessage("Processing step 3/5", "warning", $target);
+$messageManager->addMessage(['message' => "Processing step 3/5", 'type' => "warning"], $target);
 usleep(200000); // 200ms
 
-$messageManager->addMessage("Processing step 4/5", "info", $target);
+$messageManager->addMessage(['message' => "Processing step 4/5", 'type' => "info"], $target);
 usleep(300000); // 300ms
 
-$messageManager->addMessage("Processing step 5/5", "info", $target);
+$messageManager->addMessage(['message' => "Processing step 5/5", 'type' => "info"], $target);
 usleep(200000); // 200ms
 
-$messageManager->addMessage("Process completed successfully!", "success", $target);
+$messageManager->addMessage(['message' => "Process completed successfully!", 'type' => "success"], $target);

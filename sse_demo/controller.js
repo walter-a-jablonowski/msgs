@@ -11,15 +11,19 @@ const messageDisplay = new MessageDisplay({
 const sseClient = new SseMessageClient({
   serverUrl: 'sse-server.php',
   messageDisplay: messageDisplay,
-  onConnect: function(data) {
-    const statusEl = document.getElementById('connectionStatus');
-    statusEl.textContent = 'Connected (Session ID: ' + data.sessionId + ')';
-    statusEl.className = 'alert alert-success';
+  onMessage: function(message) {
+    // This is called for each new message
+    console.log('New message:', message);
   },
-  onError: function(event) {
-    const statusEl = document.getElementById('connectionStatus');
-    statusEl.textContent = 'Connection error. Attempting to reconnect...';
-    statusEl.className = 'alert alert-danger';
+  onConnect: function(data) {
+    console.log('Connected to SSE server:', data);
+    document.getElementById('connectionStatus').className = 'alert alert-success';
+    document.getElementById('statusText').textContent = 'Connected';
+  },
+  onError: function(error) {
+    console.error('SSE Error:', error);
+    document.getElementById('connectionStatus').className = 'alert alert-danger';
+    document.getElementById('statusText').textContent = 'Disconnected';
   }
 });
 
@@ -27,7 +31,6 @@ const sseClient = new SseMessageClient({
 sseClient.connect();
 
 // Handle reconnect button
-
 document.getElementById('reconnectButton').addEventListener('click', function() {
   sseClient.connect();
 });
@@ -45,7 +48,13 @@ document.getElementById('manualMessageForm').addEventListener('submit', function
     return;
   }
   
-  sseClient.sendMessage(messageText, messageType, messageTarget)
+  // Use the new approach with an object containing message fields
+  const messageData = {
+    message: messageText,
+    type: messageType
+  };
+  
+  sseClient.sendMessage(messageData, messageTarget)
     .then(response => {
       if (response.success) {
         document.getElementById('messageText').value = '';
@@ -67,7 +76,7 @@ document.getElementById('startModalProcess').addEventListener('click', function(
 
 document.getElementById('clearMainMessages').addEventListener('click', function() {
   messageDisplay.clearMessages('main');
-  
+  // Also clear on server
   fetch('ajax.php', {
     method: 'POST',
     headers: {
@@ -83,7 +92,7 @@ document.getElementById('clearMainMessages').addEventListener('click', function(
 
 document.getElementById('clearModalMessages').addEventListener('click', function() {
   messageDisplay.clearMessages('modal');
-  
+  // Also clear on server
   fetch('ajax.php', {
     method: 'POST',
     headers: {
@@ -98,7 +107,6 @@ document.getElementById('clearModalMessages').addEventListener('click', function
 });
 
 // Handle modal events to restore messages
-
 const messageModal = document.getElementById('messageModal');
 messageModal.addEventListener('shown.bs.modal', function() {
   messageDisplay.restoreMessages('modal');

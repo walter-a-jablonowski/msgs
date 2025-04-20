@@ -33,11 +33,18 @@ switch( $action )
 {
   case 'addMessage':
 
-    $message = $data['message'] ?? '';
-    $type    = $data['type'] ?? 'info';
-    $target  = $data['target'] ?? 'default';
+    $fields = $data['fields'] ?? [];
+    $target = $data['target'] ?? 'default';
     
-    $success = $messageManager->addMessage($message, $type, $target);
+    // TASK: maybe unneeded ("for backward compatibility")
+    if( empty($fields) && isset($data['message']) ) {
+      $fields = [
+        'message' => $data['message'] ?? '',
+        'type' => $data['type'] ?? 'info'
+      ];
+    }
+    
+    $success = $messageManager->addMessage($fields, $target);
     echo json_encode(['success' => $success]);
     break;
     

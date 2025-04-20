@@ -69,11 +69,26 @@ class messageDisplay
    * @return {string} Formatted message HTML
    */
   formatMessage(messageData) {
-    return this.options.messageFormat
-      .replace('{type}', messageData.type || 'info')
-      .replace('{message}', messageData.message || '')
-      .replace('{id}', messageData.id || '')
-      .replace('{timestamp}', messageData.timestamp ? new Date(messageData.timestamp * 1000).toLocaleTimeString() : '');
+    let formattedMessage = this.options.messageFormat;
+    
+    // Replace all placeholders in the format string with their values from messageData
+    for (const [key, value] of Object.entries(messageData)) {
+      // Special handling for timestamp to format as time
+      if (key === 'timestamp' && typeof value === 'number') {
+        formattedMessage = formattedMessage.replace(
+          new RegExp(`{${key}}`, 'g'), 
+          new Date(value * 1000).toLocaleTimeString()
+        );
+      } else {
+        // Replace all occurrences of the placeholder
+        formattedMessage = formattedMessage.replace(
+          new RegExp(`{${key}}`, 'g'), 
+          value !== undefined ? value : ''
+        );
+      }
+    }
+    
+    return formattedMessage;
   }
   
   /**

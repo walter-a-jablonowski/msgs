@@ -61,7 +61,13 @@ document.getElementById('manualMessageForm').addEventListener('submit', function
     return;
   }
   
-  ajaxClient.sendMessage(messageText, messageType, messageTarget)
+  // Use the new approach with an object containing message fields
+  const messageData = {
+    message: messageText,
+    type: messageType
+  };
+  
+  ajaxClient.sendMessage(messageData, messageTarget)
     .then(response => {
       if( response.success )
       {
