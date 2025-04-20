@@ -33,8 +33,8 @@ switch( $action )
 {
   case 'addMessage':
     $message = $data['message'] ?? '';
-    $type = $data['type'] ?? 'info';
-    $target = $data['target'] ?? 'default';
+    $type    = $data['type'] ?? 'info';
+    $target  = $data['target'] ?? 'default';
     
     $success = $messageManager->addMessage($message, $type, $target);
     echo json_encode(['success' => $success]);

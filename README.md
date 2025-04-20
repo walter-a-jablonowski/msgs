@@ -44,7 +44,7 @@ This project implements a system for displaying progress messages from PHP scrip
 │   └── index.php            # 
 |                            
 ├── /msgs_lib                # Libary
-│   ├── MessageManager.php   #   PHP message management class
+│   ├── MessageManager.php   #   Wrapper for messages (add, get all, clear)
 │   ├── message-display.css  #   UI message style (may be usd)
 │   ├── message-display.js   # 
 │   ├── /ajax                # 
