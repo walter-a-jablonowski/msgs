@@ -18,12 +18,12 @@ const sseClient = new SseMessageClient({
   onConnect: function(data) {
     console.log('Connected to SSE server:', data);
     document.getElementById('connectionStatus').className = 'alert alert-success';
-    document.getElementById('statusText').textContent = 'Connected';
+    document.getElementById('connectionStatus').textContent = 'Connected';
   },
   onError: function(error) {
     console.error('SSE Error:', error);
     document.getElementById('connectionStatus').className = 'alert alert-danger';
-    document.getElementById('statusText').textContent = 'Disconnected';
+    document.getElementById('connectionStatus').textContent = 'Disconnected';
   }
 });
 
