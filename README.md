@@ -37,34 +37,35 @@ This project implements a system for displaying progress messages from PHP scrip
 ```
 /msgs
 |
-├── /ajax_demo               # Ajax demo
-│   ├── ajax.php             # 
-│   ├── controller.js        # 
-│   ├── demo-process.php     # 
-│   └── index.php            # 
+├── /ajax_demo                  # Ajax demo
+│   ├── ajax.php                # 
+│   ├── controller.js           # 
+│   ├── demo-process.php        # 
+│   └── index.php               # 
 |                            
-├── /msgs_lib                # Libary
-│   ├── MessageManager.php   #   Wrapper for messages (add, get all, clear)
-│   ├── message-display.css  #   UI message style (may be usd)
-│   ├── message-display.js   # 
-│   ├── /ajax                # 
-│   │   └── ajax-client.js   #   AJAX client
-│   └── /sse                 # 
-│       └── sse-client.js    #   SSE client
+├── /msgs_lib                   # Libary
+│   └── default-sse-server.php  #   for pushing messages server -> client
+│   ├── MessageManager.php      #   Wrapper for messages (add, get all, clear)
+│   ├── message-display.css     #   UI message style (may be usd)
+│   ├── message-display.js      # 
+│   ├── /ajax                   # 
+│   │   └── ajax-client.js      #   AJAX client
+│   └── /sse                    # 
+│       └── sse-client.js       #   SSE client
 |                            
-├── /data                    # JSON message files (created automatically)
-│   └── /messages            # 
+├── /data                       # JSON message files (created automatically)
+│   └── /messages               # 
 |                            
-├── /sse_demo                # SSE demo
-│   ├── ajax.php             #   for clients to submit new messages or perform actions
-│   ├── controller.js        # 
-│   ├── demo-process.php     # 
-│   ├── index.php            # 
-│   └── sse-server.php       #   for pushing messages server -> client
+├── /sse_demo                   # SSE demo
+│   ├── ajax.php                #   for clients to submit new messages or perform actions
+│   ├── controller.js           # 
+│   ├── demo-process.php        # 
+│   ├── index.php               # 
+│   └── sse-server.php          #   for pushing messages server -> client (requires default server)
 |                            
-├── composer.json            # Composer dependencies
-├── index.php                # Main demp page
-└── README.md                # This file
+├── composer.json               # Composer dependencies
+├── index.php                   # Main demp page
+└── README.md                   # This file
 ```
 
 
