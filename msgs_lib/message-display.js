@@ -1,7 +1,7 @@
 /**
  * Message display utility for both SSE and AJAX implementations
  */
-class messageDisplay
+class MessageDisplay
 {
   constructor( options = {} )
   {
