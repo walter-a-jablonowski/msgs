@@ -5,6 +5,8 @@ This project implements a system for displaying progress messages from PHP scrip
 1. **Server-Sent Events (SSE)** - Real-time streaming of messages
 2. **Plain AJAX** - Polling-based message retrieval
 
+Simple alternative: Use ajax each time a simple text file log is shown
+
 
 ## Table of Contents
 
