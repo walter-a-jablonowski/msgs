@@ -32,7 +32,7 @@ class MessageManager
    * @param string $target Target container ID (optional)
    * @return bool Success
    */
-  public function addMessage( $fields, $target = 'default' ) : bool
+  public function addMessage( $fields, $target = 'default') : bool
   {
     // Ensure required fields are present
     if( ! isset($fields['message']) ) {

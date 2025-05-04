@@ -189,10 +189,11 @@ const messageDisplay = new MessageDisplay({
 ```
 
 Available placeholders (see MessageManager > addMessage()):
-- `{message}` - The message text (required field, will be empty if user doesn't provide it)
-- `{type}` - Message type (info, warning, danger, success, default: info)
-- `{id}` - Unique message ID
+- `{message}`   - The message text (required field, will be empty if user doesn't provide it)
+- `{type}`      - Message type (info, warning, danger, success, default: info)
+- `{id}`        - Unique message ID
 - `{timestamp}` - Message timestamp
+- `{target}`    - Target container ID where the message should be displayed on the frontend (default: 'default')
 - Any additional custom fields added to the message data
 
 ### Multiple Message Containers
