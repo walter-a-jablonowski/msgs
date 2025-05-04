@@ -188,7 +188,7 @@ const messageDisplay = new MessageDisplay({
 });
 ```
 
-Available placeholders:
+Available placeholders (see MessageManager > addMessage()):
 - `{message}` - The message text (required field, will be empty if user doesn't provide it)
 - `{type}` - Message type (info, warning, danger, success, default: info)
 - `{id}` - Unique message ID
