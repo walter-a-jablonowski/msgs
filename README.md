@@ -168,11 +168,11 @@ if( function_exists('fastcgi_finish_request') ) {
 $target = $data['target'] ?? 'default';
 
 // Your long-running process
-$messageManager->addMessage("Starting process...", "info", $target);
+$messageManager->addMessage(['message' => "Starting process...", 'type' => "info"], $target);
 // Do some work...
-$messageManager->addMessage("Step 1 complete", "info", $target);
+$messageManager->addMessage(['message' => "Step 1 complete", 'type' => "info"], $target);
 // Do some work...
-$messageManager->addMessage("Process completed!", "success", $target);
+$messageManager->addMessage(['message' => "Process completed!", 'type' => "success"], $target);
 ```
 
 
@@ -189,10 +189,11 @@ const messageDisplay = new MessageDisplay({
 ```
 
 Available placeholders:
-- `{message}` - The message text
-- `{type}` - Message type (info, warning, danger, success)
+- `{message}` - The message text (required field, will be empty if user doesn't provide it)
+- `{type}` - Message type (info, warning, danger, success, default: info)
 - `{id}` - Unique message ID
 - `{timestamp}` - Message timestamp
+- Any additional custom fields added to the message data
 
 ### Multiple Message Containers
 
@@ -206,7 +207,7 @@ You can have multiple message containers on a page:
 When sending messages, specify the target:
 
 ```javascript
-messageClient.sendMessage("This goes to the sidebar", "info", "sidebar");
+messageClient.sendMessage({message: "This goes to the sidebar", type: "info"}, "sidebar");
 ```
 
 
